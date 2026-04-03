@@ -1,0 +1,24 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  body {
+    @apply bg-background text-gray-100 font-sans antialiased;
+  }
+}
+
+.glass-panel {
+  @apply bg-card/70 backdrop-blur-lg border border-gray-700/50 rounded-2xl shadow-xl;
+}
+
+/* Leaflet fix for dark mode if needed, minimal */
+.leaflet-container {
+    background: #0B0F19 !important;
+}
+
+.leaflet-layer,
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out,
+.leaflet-control-attribution {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
