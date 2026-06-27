@@ -1,0 +1,27 @@
+
+
+services:
+  backend:
+    build: 
+      context: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      # You can replace this with your Supabase URL
+      - DATABASE_URL=sqlite:///./sql_app.db
+      - FRONTEND_URL=http://localhost
+    volumes:
+      - ./backend/sql_app.db:/app/sql_app.db
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Bake the local backend URL into the Vite build for docker-compose networking
+        - VITE_API_URL=http://localhost:8000
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: always

@@ -52,7 +52,14 @@ export default function MapView({ searchedLocation }) {
           radius={Math.min(cluster.intensity * 2 + 5, 25)}
           pathOptions={{ color: '#EF4444', fillColor: '#EF4444', fillOpacity: 0.5, weight: 2 }}
         >
-          <Tooltip>Micro Hotspot (Identified events: {cluster.intensity})</Tooltip>
+          <Tooltip>
+            <strong>{cluster.area || "Micro Hotspot"}</strong><br/>
+            {cluster.city && <span>{cluster.city}<br/></span>}
+            Risk Intensity Events: {cluster.intensity}<br/>
+            Severity: {cluster.severity}<br/>
+            Risk Level: {cluster.risk_level}<br/>
+            Risk Score: {cluster.risk_score}
+          </Tooltip>
         </CircleMarker>
       ))}
 

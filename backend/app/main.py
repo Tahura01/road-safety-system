@@ -13,16 +13,26 @@ from app.ml.risk_model import calculate_dynamic_risk
 from app.ml.spatial_clustering import get_hotspots
 from datetime import datetime
 
-models.Base.metadata.create_all(bind=engine)
+import sys
 
-# On server startup, evaluate and print the AI project accuracy
-print_model_accuracy()
+try:
+    models.Base.metadata.create_all(bind=engine)
+
+    # On server startup, evaluate and print the AI project accuracy
+    print_model_accuracy()
+except Exception as e:
+    print(f"CRITICAL STARTUP ERROR: {e}")
+    sys.exit(1)
 
 app = FastAPI(title="Road Safety System API")
 
 origins = [
-    "http://localhost:5173", # Local frontend
-    os.getenv("FRONTEND_URL", "https://your-vercel-app-url.vercel.app") # Production frontend
+    "http://localhost:5173",
+    "http://localhost",
+    "http://127.0.0.1",
+    "http://127.0.0.1:80",
+    "http://127.0.0.1:5173",
+    os.getenv("FRONTEND_URL", "https://your-vercel-app-url.vercel.app")
 ]
 
 app.add_middleware(
